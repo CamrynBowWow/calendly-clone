@@ -41,3 +41,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 - Clerk
 - Neon
 - Drizzle
+- zod
+- use-server [Library throws an error if code ends up anywhere that's not on the server "Extra safety factor"]
