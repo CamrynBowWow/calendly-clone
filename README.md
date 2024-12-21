@@ -71,3 +71,13 @@ google.calendar('v3').events.list({
 	auth: oAuthClient,
 });
 ```
+<br/>
+
+- Using !== shows event if there is no schedule
+- When going to schedule events and putting in the times it will work as intended
+
+```bash
+if (validTimes.length === 0) {
+	return <NoTimeSlots event={event} calendarUser={calendarUser} />;
+}
+```

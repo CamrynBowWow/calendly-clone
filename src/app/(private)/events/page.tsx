@@ -38,7 +38,7 @@ export default async function EventsPage() {
 				</Button>
 			</div>
 			{events.length > 0 ? (
-				<div className='grid gap-4 grid-cols-[repeat(auto-full, minmax(400px, 1fr))]'>
+				<div className='grid gap-4 grid-cols-[repeat(auto-fill,minmax(400px,1fr))]'>
 					{events.map((event) => (
 						<EventCard key={event.id} {...event} />
 					))}
@@ -62,7 +62,7 @@ type EventCardProps = {
 	id: string;
 	isActive: boolean;
 	name: string;
-	description: string;
+	description: string | null;
 	durationInMinutes: number;
 	clerkUserId: string;
 };

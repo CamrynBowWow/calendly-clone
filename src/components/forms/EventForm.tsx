@@ -14,21 +14,21 @@ import {
 	FormMessage,
 } from '../ui/form';
 import { Input } from '../ui/input';
-import { Button } from '../ui/button';
 import Link from 'next/link';
+import { Button } from '../ui/button';
 import { Textarea } from '../ui/textarea';
 import { Switch } from '../ui/switch';
 import { createEvent, deleteEvent, updateEvent } from '@/server/actions/events';
 import {
 	AlertDialog,
-	AlertDialogAction,
-	AlertDialogCancel,
 	AlertDialogContent,
 	AlertDialogDescription,
-	AlertDialogFooter,
 	AlertDialogHeader,
-	AlertDialogTitle,
 	AlertDialogTrigger,
+	AlertDialogTitle,
+	AlertDialogFooter,
+	AlertDialogCancel,
+	AlertDialogAction,
 } from '../ui/alert-dialog';
 import { useTransition } from 'react';
 
@@ -44,7 +44,6 @@ export function EventForm({
 	};
 }) {
 	const [isDeletePending, startDeleteTransition] = useTransition();
-
 	const form = useForm<z.infer<typeof eventFormSchema>>({
 		resolver: zodResolver(eventFormSchema),
 		defaultValues: event ?? {
@@ -55,11 +54,12 @@ export function EventForm({
 
 	async function onSubmit(values: z.infer<typeof eventFormSchema>) {
 		const action = event == null ? createEvent : updateEvent.bind(null, event.id);
-
 		const data = await action(values);
 
 		if (data?.error) {
-			form.setError('root', { message: 'There was an error saving your event' });
+			form.setError('root', {
+				message: 'There was an error saving your event',
+			});
 		}
 	}
 
@@ -128,7 +128,6 @@ export function EventForm({
 						</FormItem>
 					)}
 				/>
-
 				<div className='flex gap-2 justify-end'>
 					{event && (
 						<AlertDialog>
@@ -170,9 +169,11 @@ export function EventForm({
 							</AlertDialogContent>
 						</AlertDialog>
 					)}
+
 					<Button
 						disabled={isDeletePending || form.formState.isSubmitting}
 						type='button'
+						asChild
 						variant='outline'
 					>
 						<Link href='/events'>Cancel</Link>

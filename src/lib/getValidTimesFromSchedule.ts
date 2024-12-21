@@ -1,5 +1,7 @@
 import { DAYS_OF_WEEK_IN_ORDER } from '@/data/constants';
 import { db } from '@/drizzle/db';
+import { ScheduleAvailabilityTable } from '@/drizzle/schema';
+import { getCalendarEventTimes } from '@/server/googleCalendar';
 import {
 	addMinutes,
 	areIntervalsOverlapping,
@@ -15,8 +17,6 @@ import {
 	setMinutes,
 } from 'date-fns';
 import { fromZonedTime } from 'date-fns-tz';
-import { ScheduleAvailabilityTable } from '@/drizzle/schema';
-import { getCalendarEventTimes } from '@/server/googleCalendar';
 
 export async function getValidTimesFromSchedule(
 	timesInOrder: Date[],
@@ -31,6 +31,7 @@ export async function getValidTimesFromSchedule(
 		where: ({ clerkUserId: userIdCol }, { eq }) => eq(userIdCol, event.clerkUserId),
 		with: { availabilities: true },
 	});
+
 	if (schedule == null) return [];
 
 	const groupedAvailabilities = Object.groupBy(schedule.availabilities, (a) => a.dayOfWeek);
@@ -46,7 +47,6 @@ export async function getValidTimesFromSchedule(
 			intervalDate,
 			schedule.timezone
 		);
-
 		const eventInterval = {
 			start: intervalDate,
 			end: addMinutes(intervalDate, event.durationInMinutes),
