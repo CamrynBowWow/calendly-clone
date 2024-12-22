@@ -14,6 +14,8 @@ import { and } from 'drizzle-orm';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
+export const revalidate = 0;
+
 export default async function BookingPage({
 	params: { clerkUserId },
 }: {
